@@ -1,0 +1,125 @@
+# 2022-linux-public-shitianyiyi-chap0x01
+2022-linux-public-shitianyiyi created by GitHub Classroom
+
+
+- #### 一、当前 Linux 发行版基本信息
+
+  命令如下：
+
+​       `lsb_release -a`
+
+​       `cat /etc/issue`
+
+- #### 当前 Linux 内核版本信息
+
+   命令如下：
+
+   `uname -a`
+
+   `cat /proc/version`
+
+操作过程如下：（分别在本地虚拟机ub20.04.2与阿里云云上实践平台进行操作）
+
+本地虚拟机：
+
+![uname －a](IMG\uname －a .png)
+
+阿里云平台：
+
+![ALIYUN](IMG\ALIYUN.png)
+
+### 二、Virtualbox 安装完 Ubuntu 之后新添加的网卡如何实现系统开机自动启用和自动获取 IP
+
+1、通过`ip a`命令，查看虚拟机网卡
+
+2、通过`sudo vim /etc/netplan/00-installer-config.yaml`命令进入vim编辑器，手动添加如下内容：
+
+​      `enp0s8:`
+
+​          `dhcp4:  true`
+
+![wangka](IMG\wangka.png)
+
+3、**退出vim编辑器**（先按Esc键，之后输入:x保存退出），最后执行`sudo netplan apply`生效
+
+![sudo_netplan_apply](img/sudo_netplan_apply.png)
+
+*****本题参考链接：https://blog.csdn.net/weixin_39917291/article/details/109868551
+
+### 三、如何使用 `scp` 在「虚拟机和宿主机之间」、「本机和远程 Linux 系统之间」传输文件
+
+#### 本机和远程 Linux 系统之间
+
+在本地虚拟机ub20.04.2与阿里云平台间传输文件
+
+1、用`touch a.txt`  `touch b.txt`命令分别在阿里云平台和本地虚拟机上创建两个文本文件
+
+​     *使用`find / -name a.txt`m命令，确认文件路径
+
+​     *使用`whoami`命令，确认用户名
+
+​     *使用`ip a`命令，确认ip地址
+
+![touch.a.txt](IMG\touch.a.txt.png)
+
+2、【本机从远程获取文件】用`ping`命令连接远程主机地址，成功后使用
+
+`scp -P 22 root@152.163.99.40:/root/a.txt ./`命令，输入远程主机密码后，将远程主机的a.txt文件获取至虚拟机，之后在本地虚拟机再用`ls`命令进行确认
+
+传输：
+
+![ali_local_get](IMG\ping.png)
+
+3、【本机向远程发送文件】用`ping`命令连接远程主机地址，成功后使用
+
+scp log.txt vivek@nas04:~/data/命令，输入远程主机密码后，当前目录中命名的文件复制到名为“~/data($HOME/data或/home/vivek/data)”的目录中，之后在远程主机再用`ls`命令进行确认
+
+## OR use full path ##
+scp log.txt vivek@nas04:/home/vivek/data/  
+​
+## OR use the IP address ##
+scp log.txt vivek@192.168.2.17:~/data/
+![scp](IMG\scp.png)
+
+*****本题参考链接：https://www.cnblogs.com/SunshineKimi/p/10847488.html
+
+#### 虚拟机和宿主机之间
+
+1、确认主机已有ssh服务，在宿主机桌面创建se.txt文件，并打开cmd
+
+2、【宿主机获取虚拟机文件】用`ping`命令连接虚拟机地址，成功后使用
+
+scp ~/Downloads/Share/Spectrum_Scale_Developer-5.1.0.3-x86_64-Linux-install root@172.168.0.5:~/share命令，输入虚拟机密码后，获取虚拟机文件至宿主机，如图可见已获取
+
+传输：
+
+![host](IMG\host.png)
+
+确认：
+
+![host_confirm](IMG\host-confirm.png)
+
+
+*****本题参考链接：https://www.zhangshilong.cn/work/150480.html
+
+### 四、如何配置 SSH 免密登录
+
+1、输入`ssh-keygen -b 4096`生成公私钥对
+
+2、输入`ssh-copy-id -i ~/.ssh/id_rsa.pub root@192.168.235.22后，输入虚拟机口令，完成配置，之后可以通过
+
+`ssh root@192.168.235.22`进行免密登录
+
+![ssh1](IMG\ssh1.png)
+
+![ssh2](IMG\ssh2.png)
+
+*****本题参考链接：[Linux 系统与网络管理(2021)_哔哩哔哩_bilibili](https://www.bilibili.com/video/BV1Hb4y1R7FE?p=23)
+
+### 实验中遇到的问题及解决方案
+
+**1、ssh免密登录时出现问题**
+
+如图所示，经检验，发现需要执行命令eval "$(ssh-agent -s)" ssh-add 即可
+
+![question1](IMG\Q1.png)
