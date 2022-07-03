@@ -139,35 +139,13 @@ ps aux | grep ping
 
 ### 问题与解决
 
-- 文件解压缩时将文件目录弄混，导致文件压缩出错；
 - 过滤文件内容grep命令通过查找文档的方式理解了具体使用方法；
-
-### 结果汇总
-
-|                                         |                         Ubuntu20.04                          |                            CentOS                            |
-| :-------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: |
-|              **安装tmux**               |                    sudo apt install tmux                     |                       yum install tmux                       |
-|        **查看tmux当前安装路径**         |       sudo apt-cache show tmux 或 dpkg -l softwarename       |                    rpm -qal \| grep tmux                     |
-|             **安装tshark**              |                 sudo apt-get install tshark                  |                    yum install wireshark                     |
-|         **查看tshark安装路径**          |                  sudo apt-cache show tshark                  |                  rpm -qal \| grep wireshark                  |
-|             **卸载tshark**              |              sudo apt-get remove --purge tshark              |                   yum -y remove wireshark                    |
-|     **文件名包含 `666` 的所有文件**     |                  sudo find . -name '*666*'                   |                              -                               |
-|    **文件内容包含 `666` 的所有文件**    |                    sudo grep -r "666" ./                     |                              -                               |
-|                **压缩**                 |                 zip -r haved.zip ~/test.txt                  |                              -                               |
-|               **解压缩**                |                unzip -O cp936 -l homework.zip                |                              -                               |
-|           **查看物理CPU个数**           | cat /proc/cpuinfo  \|   grep "physical id"  \| sort  \| uniq \| wc -l | cat /proc/cpuinfo  \| grep "physical id" \| sort \| uniq \| wd -l |
-| **查看每个物理CPU中core的个数(即核数)** |       cat / proc/cpuinfo \| grep "cpu  cores" \| uniq        |                              -                               |
-|          **查看逻辑CPU的个数**          |        cat /proc/cpuinfo \| grep "processor" \| wc -l        |                              -                               |
-|            **查看内存信息**             |                      cat /proc/meminfo                       |                             free                             |
-|            **查看硬盘信息**             |                        sudo fdisk -l                         |                              -                               |
-
-
+- 文件解压缩时将文件目录弄混，导致文件压缩出错；
 
 ### 参考资料
 
+-[asciinema Docs]([How it works - asciinema](https://asciinema.org/docs/how-it-works))
 - [ubuntu 命令行卸载并清理软件（卸载的很干净）](https://blog.csdn.net/jiayoudangdang/article/details/79943065)
 - [CentOS常用的文件操作命令总结](https://www.haorooms.com/post/centeros_wj_zj)
-- [asciinema Docs]([How it works - asciinema](https://asciinema.org/docs/how-it-works))
-- [Linux查看物理CPU个数、核数、逻辑CPU个数]([Linux查看物理CPU个数、核数、逻辑CPU个数 - emanlee - 博客园 (cnblogs.com)](https://www.cnblogs.com/emanlee/p/3587571.html))
 
 
